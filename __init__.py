@@ -1,26 +1,33 @@
 import configparser
 import mimetypes
 import shutil
+import traceback
+
 import folder_paths
 import os
 import sys
 import threading
 import datetime
-import re
 import locale
 import subprocess  # don't remove this
 from tqdm.auto import tqdm
 import concurrent
-import ssl
 from urllib.parse import urlparse
 import http.client
 import re
-import signal
 import nodes
-import torch
+
+try:
+    import cm_global
+except:
+    glob_path = os.path.join(os.path.dirname(__file__), "glob")
+    sys.path.append(glob_path)
+    import cm_global
+
+    print(f"[WARN] ComfyUI-Manager: Your ComfyUI version is outdated. Please update to the latest version.")
 
 
-version = [1, 15]
+version = [1, 19, 1]
 version_str = f"V{version[0]}.{version[1]}" + (f'.{version[2]}' if len(version) > 2 else '')
 print(f"### Loading: ComfyUI-Manager ({version_str})")
 
@@ -283,6 +290,8 @@ def print_comfyui_version():
         current_branch = repo.active_branch.name
         comfy_ui_hash = repo.head.commit.hexsha
 
+        cm_global.variables['comfyui.revision'] = comfy_ui_revision
+
         try:
             if int(comfy_ui_revision) < comfy_ui_required_revision:
                 print(f"\n\n## [WARN] ComfyUI-Manager: Your ComfyUI version ({comfy_ui_revision}) is too old. Please update to the latest version. ##\n\n")
@@ -290,6 +299,21 @@ def print_comfyui_version():
             pass
 
         comfy_ui_commit_date = repo.head.commit.committed_datetime.date()
+
+        # process on_revision_detected -->
+        if 'cm.on_revision_detected_handler' in cm_global.variables:
+            for k, f in cm_global.variables['cm.on_revision_detected_handler']:
+                try:
+                    f(comfy_ui_revision)
+                except Exception:
+                    print(f"[ERROR] '{k}' on_revision_detected_handler")
+                    traceback.print_exc()
+
+            del cm_global.variables['cm.on_revision_detected_handler']
+        else:
+            print(f"[ComfyUI-Manager] Some features are restricted due to your ComfyUI being outdated.")
+        # <--
+
         if current_branch == "master":
             print(f"### ComfyUI Revision: {comfy_ui_revision} [{comfy_ui_hash[:8]}] | Released on '{comfy_ui_commit_date}'")
         else:
@@ -317,8 +341,9 @@ def __win_check_git_update(path, do_fetch=False, do_update=False):
     if 'detected dubious' in output:
         try:
             # fix and try again
-            print(f"[ComfyUI-Manager] Try fixing 'dubious repository' error on '{path}' repo")
-            process = subprocess.Popen(['git', 'config', '--global', '--add', 'safe.directory', path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            safedir_path = path.replace('\\', '/')
+            print(f"[ComfyUI-Manager] Try fixing 'dubious repository' error on '{safedir_path}' repo")
+            process = subprocess.Popen(['git', 'config', '--global', '--add', 'safe.directory', safedir_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             output, _ = process.communicate()
 
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -330,7 +355,7 @@ def __win_check_git_update(path, do_fetch=False, do_update=False):
         if 'detected dubious' in output:
             print(f'\n[ComfyUI-Manager] Failed to fixing repository setup. Please execute this command on cmd: \n'
                   f'-----------------------------------------------------------------------------------------\n'
-                  f'git config --global --add safe.directory "{path}"\n'
+                  f'git config --global --add safe.directory "{safedir_path}"\n'
                   f'-----------------------------------------------------------------------------------------\n')
 
     if do_update:
@@ -1198,12 +1223,14 @@ class GitProgress(RemoteProgress):
         self.pbar.pos = 0
         self.pbar.refresh()
 
+
 def is_valid_url(url):
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
     except ValueError:
         return False
+
 
 def gitclone_install(files):
     print(f"install: {files}")
@@ -1238,6 +1265,11 @@ def gitclone_install(files):
 
     print("Installation was successful.")
     return True
+
+
+def pip_install(packages):
+    install_cmd = ['#FORCE', sys.executable, "-m", "pip", "install", '-U'] + packages
+    try_install_script('pip install via manager', '.', install_cmd)
 
 
 import platform
@@ -1430,6 +1462,16 @@ async def install_custom_node_git_url(request):
     return web.Response(status=400)
 
 
+@server.PromptServer.instance.routes.get("/customnode/install/pip")
+async def install_custom_node_git_url(request):
+    res = False
+    if "packages" in request.rel_url.query:
+        packages = request.rel_url.query['packages']
+        pip_install(packages.split(' '))
+
+    return web.Response(status=200)
+
+
 @server.PromptServer.instance.routes.post("/customnode/uninstall")
 async def uninstall_custom_node(request):
     json_data = await request.json()
@@ -1500,15 +1542,16 @@ async def update_comfyui(request):
         try:
             remote.fetch()
         except Exception as e:
-            if 'detected dubious' in e:
+            if 'detected dubious' in str(e):
                 print(f"[ComfyUI-Manager] Try fixing 'dubious repository' error on 'ComfyUI' repository")
-                subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', comfy_path])
+                safedir_path = comfy_path.replace('\\', '/')
+                subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', safedir_path])
                 try:
                     remote.fetch()
                 except Exception:
                     print(f"\n[ComfyUI-Manager] Failed to fixing repository setup. Please execute this command on cmd: \n"
                           f"-----------------------------------------------------------------------------------------\n"
-                          f'git config --global --add safe.directory "{comfy_path}"\n'
+                          f'git config --global --add safe.directory "{safedir_path}"\n'
                           f"-----------------------------------------------------------------------------------------\n")
 
         commit_hash = repo.head.commit.hexsha
@@ -1968,6 +2011,45 @@ async def share_art(request):
     }, content_type='application/json', status=200)
 
 
+def sanitize(data):
+    return data.replace("<", "&lt;").replace(">", "&gt;")
+
+
+def lookup_customnode_by_url(data, target):
+    for x in data['custom_nodes']:
+        if target in x['files']:
+            dir_name = os.path.splitext(os.path.basename(target))[0].replace(".git", "")
+            dir_path = os.path.join(custom_nodes_path, dir_name)
+            if os.path.exists(dir_path):
+                x['installed'] = 'True'
+            elif os.path.exists(dir_path + ".disabled"):
+                x['installed'] = 'Disabled'
+            return x
+
+    return None
+
+
+async def _confirm_try_install(sender, custom_node_url, msg):
+    json_obj = await get_data_by_mode('default', 'custom-node-list.json')
+
+    sender = sanitize(sender)
+    msg = sanitize(msg)
+    target = lookup_customnode_by_url(json_obj, custom_node_url)
+
+    if target is not None:
+        server.PromptServer.instance.send_sync("cm-api-try-install-customnode",
+                                               {"sender": sender, "target": target, "msg": msg})
+    else:
+        print(f"[ComfyUI Manager API] Failed to try install - Unknown custom node url '{custom_node_url}'")
+
+
+def confirm_try_install(sender, custom_node_url, msg):
+    asyncio.run(_confirm_try_install(sender, custom_node_url, msg))
+
+
+cm_global.register_api('cm.try-install-custom-node', confirm_try_install)
+
+
 import asyncio
 async def default_cache_update():
     async def get_cache(filename):
@@ -1996,4 +2078,10 @@ WEB_DIRECTORY = "dist"
 I18N_DIRECTORY = "i18n"
 NODE_CLASS_MAPPINGS = {}
 __all__ = ['NODE_CLASS_MAPPINGS']
+
+cm_global.register_extension('ComfyUI-Manager',
+                             {'version': version,
+                              'name': 'ComfyUI Manager',
+                              'nodes': {'Terminal Log //CM'},
+                              'description': 'It provides the ability to manage custom nodes in ComfyUI.', })
 
