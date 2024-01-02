@@ -1,0 +1,123 @@
+{
+  "ComfyUI Manager Menu": "ComfyUI Manager",
+
+  "Manager": "ComfyUI 管理",
+  "Share": "分享工作流",
+
+  "Skip update check": "跳过更新检查",
+
+  "DB: Channel (1day cache)": "数据库：频道（1天缓存）",
+  "DB: Local": "数据库：本地",
+  "DB: Channel (remote)": "数据库：频道(远程)",
+
+  "Preview method: Auto": "预览方式：自动",
+  "Preview method: TAESD (slow)": "预览方式：TAESD（慢）",
+  "Preview method: Latent2RGB (fast)": "预览方式：Latent2RGB（快）",
+  "Preview method: None (very fast)": "预览方式：无（非常快）",
+
+  "Badge: None": "节点标记：无",
+  "Badge: Nickname": "节点标记：昵称",
+  "Badge: Nickname (hide built-in)": "节点标记：昵称（隐藏内置）",
+  "Badge: #ID Nickname": "节点标记：#ID 昵称",
+  "Badge: #ID Nickname (hide built-in)": "节点标记：#ID 昵称（隐藏内置）",
+
+  "Channel: {name}": "更新频道: {name}",
+  "Share: {option}": "分享到: {option}",
+
+  "Install via Git URL": "通过 Git URL 安装",
+  "Snapshot Manager": "快照管理器",
+  "EXPERIMENTAL": "实验性功能",
+
+  "Others": "其他",
+  "Update ComfyUI": "更新 ComfyUI",
+  "Update all": "更新全部",
+  "Fetch Updates": "更新自定义节点",
+  "Update All": "更新全部",
+  "Install Custom Nodes": "安装自定义节点",
+  "Install Missing Custom Nodes": "安装缺失的自定义节点",
+  "Install Models": "安装模型",
+  "Alternatives of A1111": "A1111 SD 的替代插件",
+
+  "Community Resources": "社区资源",
+  "Community Manual": "ComfyUI 社区手册",
+  "Comfy Custom Node How To": "ComfyUI 自定义节点教程",
+  "ComfyUI Guide To Making Custom Nodes": "ComfyUI 制作自定义节点指南",
+  "ComfyUI Examples": "ComfyUI 示例",
+
+  "Workflow Gallery": "ComfyUI 工作流库",
+  "Share your art": "分享你的工作流",
+  "To share this, first run a prompt. Once it's done, click 'Share'.": "要分享这个工作流，请先运行一次。运行完成后，再点击“分享”。",
+  "No supported output node found ({supported_nodes_string}). To share this workflow, please add an output node to your graph and re-run your prompt.": "没有找到输出节点（{supported_nodes_string}）。要分享这个工作流，请在工作流中添加一个输出节点并重新运行。",
+
+  "Nodes Info": "节点信息",
+
+  "🏞️ Share Output": "🏞️ 分享输出的图片",
+
+  "Install": "安装",
+  "Installed": "已安装",
+  "Installing": "安装中",
+  "Uninstall": "卸载",
+  "Not Install": "未安装",
+  "Update": "更新",
+  "Disabled": "已禁用",
+  "Disable": "禁用",
+  "Enable": "启用",
+  "Options": "选项",
+  "Actions": "操作",
+  "Operation": "操作",
+  "All": "全部",
+  "Type": "类型",
+  "Success": "成功",
+  "Failed": "失败",
+  "Error": "错误",
+  "Save": "保存",
+  "Restore": "恢复",
+  "Remove": "移除",
+  "Restart ComfyUI": "重启 ComfyUI",
+
+  "Loading...": "加载中...",
+  "Executing...": "执行中...",
+
+  "input search keyword": "输入搜索关键字",
+  "Search custom nodes..": "搜索自定义节点..",
+  "Search Models...": "搜索模型...",
+  "No data found": "没有找到数据",
+
+  "Filter: all": "全部",
+  "Filter: installed": "已安装",
+  "Filter: not-installed": "未安装",
+  "Filter: disabled": "已禁用",
+  "Filter: update": "可更新",
+
+  "Tags": "标签",
+  "Author": "作者",
+  "Title": "标题",
+  "Description": "描述",
+
+  "Installing custom nodes {name}...": "正在安装自定义节点 {name}...",
+  "Updating custom nodes {name}...": "正在更新自定义节点 {name}...",
+  "Uninstalling custom nodes {name}...": "正在卸载自定义节点 {name}...",
+  "Failed to {action} custom node: {title}": "{action}自定义节点失败：{title}",
+  "Successfully {action} custom node: {title}": "{action}自定义节点成功：{title}",
+  "Are you sure you'd like to reboot the server?": "确定要重启 ComfyUI 服务器吗？",
+  "Please enter the URL of the Git repository to install": "请输入要安装的 Git 仓库的 URL",
+  "To apply the installed custom node, please RESTART ComfyUI. And refresh browser.": "安装自定义节点后，请重启 ComfyUI，并刷新浏览器。",
+  "To apply the installed/updated/disabled/enabled custom node, please RESTART ComfyUI. And refresh browser.": "安装/更新/禁用/启用自定义节点后，请重启 ComfyUI，并刷新浏览器。",
+  "To apply the snapshot, please Restart ComfyUI. And refresh browser.": "应用快照后，请重启 ComfyUI，并刷新浏览器。",
+
+  "Installing model {name}...": "正在安装模型 {name}...",
+  "Uninstalling model {name}...": "正在卸载模型 {name}...",
+  "Successfully {action} model: {name}": "{action}模型成功：{name}",
+  "Failed to {action} model: {name}": "{action}模型失败：{name}",
+
+  "Invalid Git url": "无效的 Git URL",
+  "Failed to install custom nodes from Git url": "从 Git URL 安装自定义节点失败",
+  "Failed to update ComfyUI": "更新 ComfyUI 失败",
+  "ComfyUI has been successfully updated": "ComfyUI 已成功更新",
+  "ComfyUI is already up to date with the latest version": "ComfyUI 已经是最新版本",
+  "Updating ComfyUI...": "正在更新 ComfyUI...",
+  "Updating all...": "正在更新...",
+  "Failed to update ComfyUI or several extensions": "更新 ComfyUI 或多个扩展失败",
+  "ComfyUI and all extensions have been updated to the latest version, To apply the updated custom node, please RESTART ComfyUI. And refresh browser": "ComfyUI 和所有扩展已更新到最新版本，要应用更新的自定义节点，请重启 ComfyUI，并刷新浏览器",
+  "ComfyUI and all extensions are already up-to-date with the latest versions": "ComfyUI 和所有扩展已经是最新版本"
+}

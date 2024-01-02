@@ -1992,7 +1992,8 @@ async def default_cache_update():
 threading.Thread(target=lambda: asyncio.run(default_cache_update())).start()
 
 
-WEB_DIRECTORY = "js"
+WEB_DIRECTORY = "dist"
+I18N_DIRECTORY = "i18n"
 NODE_CLASS_MAPPINGS = {}
 __all__ = ['NODE_CLASS_MAPPINGS']
 

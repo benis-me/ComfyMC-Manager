@@ -1,0 +1,6 @@
+export enum CUSTOM_NODE_MODE {
+  NORMAL,
+  UPDATE,
+  MISSING_NODES,
+  A1111,
+}
