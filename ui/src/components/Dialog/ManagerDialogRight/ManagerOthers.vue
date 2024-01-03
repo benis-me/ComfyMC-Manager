@@ -1,7 +1,7 @@
 <template>
-  <div class="manager-block">
+  <div class="manager-block" style="height: 100%">
     <span class="manager-block__title">{{ t('Others') }}</span>
-    <div class="manager-block__content">
+    <div class="manager-block__content" style="height: 100%">
       <div class="manager-item">
         <Button
           block
@@ -24,7 +24,7 @@
         </Button>
         <Menu ref="workflowMenuRef" :model="galleryOptions" popup />
       </div>
-      <div class="manager-item">
+      <div class="manager-item" style="height: 100%">
         <div
           class="manager-notice"
           v-if="!noticeLoading && !noticeError"
@@ -110,7 +110,7 @@ onMounted(() => {
 <style lang="scss">
 .manager-notice {
   width: 100%;
-  height: 360px;
+  height: 100%;
   overflow: auto;
   background: rgb(0 0 0 / 8%);
   border: 1px solid rgb(255 255 255 / 8%);
@@ -118,6 +118,7 @@ onMounted(() => {
   box-sizing: border-box;
   padding: 0 20px;
   padding-bottom: 10px;
+  word-wrap: break-word;
 
   hr {
     margin: 10px 0;

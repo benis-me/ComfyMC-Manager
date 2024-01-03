@@ -51,7 +51,8 @@ useEventBus('ComfyUI::Restart').on(onRestart)
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 50%;
+  width: calc((100% - 40px) / 2);
+  flex-shrink: 0;
 }
 .manager-block {
   display: flex;
