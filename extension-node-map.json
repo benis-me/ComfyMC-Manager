@@ -107,6 +107,7 @@
             "IntToString-badger",
             "StringToFizz-badger",
             "TextListToString-badger",
+            "VideoCut-badger",
             "getImageSide-badger"
         ],
         {
@@ -1492,6 +1493,18 @@
             "title_aux": "comfyui_face_parsing"
         }
     ],
+    "https://github.com/Ryuukeisyou/comfyui_image_io_helpers": [
+        [
+            "ImageLoadAsMaskByPath(ImageIOHelpers)",
+            "ImageLoadByPath(ImageIOHelpers)",
+            "ImageLoadFromBase64(ImageIOHelpers)",
+            "ImageSaveAsBase64(ImageIOHelpers)",
+            "ImageSaveToPath(ImageIOHelpers)"
+        ],
+        {
+            "title_aux": "comfyui_image_io_helpers"
+        }
+    ],
     "https://github.com/SLAPaper/ComfyUI-Image-Selector": [
         [
             "ImageDuplicator",
@@ -2521,6 +2534,14 @@
         ],
         {
             "title_aux": "ComfyUI-Gemini"
+        }
+    ],
+    "https://github.com/ZHO-ZHO-ZHO/ComfyUI-Q-Align": [
+        [
+            "QAlign_Zho"
+        ],
+        {
+            "title_aux": "ComfyUI-Q-Align"
         }
     ],
     "https://github.com/ZHO-ZHO-ZHO/ComfyUI-Text_Image-Composite": [
@@ -4376,7 +4397,6 @@
             "ImageGridComposite2x2",
             "ImageGridComposite3x3",
             "InjectNoiseToLatent",
-            "MarigoldVAELoader",
             "NormalizeLatent",
             "OffsetMask",
             "ReferenceOnlySimple3",
@@ -4620,6 +4640,7 @@
             "ImpactConditionalStopIteration",
             "ImpactControlBridge",
             "ImpactControlNetApplySEGS",
+            "ImpactControlNetClearSEGS",
             "ImpactDecomposeSEGS",
             "ImpactDilateMask",
             "ImpactDilateMaskInSEGS",
@@ -4790,6 +4811,7 @@
             "Manga2Anime_LineArt_Preprocessor_Provider_for_SEGS //Inspire",
             "MediaPipeFaceMeshDetectorProvider //Inspire",
             "MediaPipe_FaceMesh_Preprocessor_Provider_for_SEGS //Inspire",
+            "MeshGraphormerDepthMapPreprocessorProvider_for_SEGS //Inspire",
             "MiDaS_DepthMap_Preprocessor_Provider_for_SEGS //Inspire",
             "OpenPose_Preprocessor_Provider_for_SEGS //Inspire",
             "PromptBuilder //Inspire",
