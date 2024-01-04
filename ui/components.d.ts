@@ -26,7 +26,6 @@ declare module 'vue' {
     ManagerRight: typeof import('./src/components/Dialog/ManagerDialogRight/ManagerRight.vue')['default']
     ManagerUpdate: typeof import('./src/components/Dialog/ManagerDialogLeft/ManagerUpdate.vue')['default']
     Menu: typeof import('primevue/menu')['default']
-    Message: typeof import('primevue/message')['default']
     SnapshotDialog: typeof import('./src/components/Dialog/SnapshotDialog.vue')['default']
   }
 }

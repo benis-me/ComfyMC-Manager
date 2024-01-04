@@ -6,10 +6,12 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import cssInjectByJs from 'vite-plugin-css-injected-by-js'
 import { PrimeVueResolver } from 'unplugin-vue-components/resolvers'
-// import { TDesignResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __VUE_OPTIONS_API__: false,
+  },
   resolve: {
     alias: {
       '@': join(__dirname, './src'),
@@ -47,12 +49,7 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['vue'],
-      resolvers: [
-        // TDesignResolver({
-        //   library: 'vue-next',
-        // }),
-        PrimeVueResolver(),
-      ],
+      resolvers: [PrimeVueResolver()],
     }),
     Components({
       dts: true,
