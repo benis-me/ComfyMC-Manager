@@ -260,7 +260,7 @@ const tableColums = computed(() => {
           </Button>
         )
 
-        let btns = null
+        let btns: any = null
         switch (installed) {
           case 'Fail':
           case 'True':

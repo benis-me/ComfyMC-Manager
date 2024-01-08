@@ -331,7 +331,7 @@ const tableColums = computed(() => {
           </Button>
         )
 
-        let btns = null
+        let btns: any = null
         switch (installed) {
           case 'Fail':
           case 'True':
@@ -462,7 +462,10 @@ async function filterMissingNode() {
   const mappings = await getCustomnodeMappings()
 
   // build regex->url map
-  const regex_to_url = []
+  const regex_to_url: {
+    regex: RegExp
+    url: string
+  }[] = []
   for (const i in customNodes.value) {
     const node = customNodes.value[i]
     if (node['nodename_pattern']) {
@@ -488,7 +491,7 @@ async function filterMissingNode() {
     registered_nodes.add(LiteGraph.registered_node_types[i].type)
   }
 
-  const missing_nodes = new Set()
+  const missing_nodes: Set<string> = new Set()
   const workflow = app.graph.serialize()
   const group_nodes =
     workflow.extra && workflow.extra.groupNodes ? workflow.extra.groupNodes : []

@@ -111,6 +111,7 @@ onMounted(() => {
 .manager-notice {
   width: 100%;
   height: 100%;
+  max-height: 407px;
   overflow: auto;
   background: rgb(0 0 0 / 8%);
   border: 1px solid rgb(255 255 255 / 8%);
