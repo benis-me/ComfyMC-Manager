@@ -7,13 +7,13 @@ import { CustomNodesInstaller } from "./custom-nodes-downloader.js";
 import { AlternativesInstaller } from "./a1111-alter-downloader.js";
 import { SnapshotManager } from "./snapshot.js";
 import { ModelInstaller } from "./model-downloader.js";
-import { manager_instance, setManagerInstance, install_via_git_url, install_pip, rebootAPI } from  "./common.js";
+import { manager_instance, setManagerInstance, install_via_git_url, install_pip, rebootAPI, free_models } from  "./common.js";
 
 var docStyle = document.createElement('style');
 docStyle.innerHTML = `
 #cm-manager-dialog {
 	width: 1000px;
-	height: 450px;
+	height: 465px;
 	box-sizing: content-box;
 	z-index: 10000;
 }
@@ -66,7 +66,7 @@ docStyle.innerHTML = `
 .cm-notice-board {
 	width: 310px;
 	padding: 0px !important;
-	height: 190px;
+	height: 230px;
 	overflow: auto;
 	color: var(--input-text);
 	border: 1px solid var(--descrip-text);
@@ -499,7 +499,23 @@ async function updateAll(update_check_checkbox, manager_dialog) {
 			return false;
 		}
 		if(response1.status == 201 || response2.status == 201) {
-			app.ui.dialog.show("ComfyUI and all extensions have been updated to the latest version.<BR>To apply the updated custom node, please <button class='cm-small-button' id='cm-reboot-button'>RESTART</button> ComfyUI. And refresh browser.");
+			const update_info = await response2.json();
+
+			let failed_list = "";
+			if(update_info.failed.length > 0) {
+				failed_list = "<BR>FAILED: "+update_info.failed.join(", ");
+			}
+
+			let updated_list = "";
+			if(update_info.updated.length > 0) {
+				updated_list = "<BR>UPDATED: "+update_info.updated.join(", ");
+			}
+
+			app.ui.dialog.show(
+				"ComfyUI and all extensions have been updated to the latest version.<BR>To apply the updated custom node, please <button class='cm-small-button' id='cm-reboot-button'>RESTART</button> ComfyUI. And refresh browser.<BR>"
+				+failed_list
+				+updated_list
+				);
 
 			const rebootButton = document.getElementById('cm-reboot-button');
 			rebootButton.addEventListener("click",
@@ -547,13 +563,7 @@ function newDOMTokenList(initialTokens) {
  * Check whether the node is a potential output node (img, gif or video output)
  */
 const isOutputNode = (node) => {
-	return [
-		"VHS_VideoCombine",
-		"PreviewImage",
-		"SaveImage",
-		"ADE_AnimateDiffCombine",
-		"SaveAnimatedWEBP",
-	].includes(node.type);
+	return SUPPORTED_OUTPUT_NODE_TYPES.includes(node.type);
 }
 
 // -----------
@@ -796,10 +806,15 @@ class ManagerMenuDialog extends ComfyDialog {
 									install_pip(url, self);
 								}
 							}
+					}),
+					$el("button.cm-experimental-button", {
+						type: "button",
+						textContent: "Unload models",
+						onclick: () => { free_models(); }
 					})
 				]),
 		];
-	}
+}
 
 	createControlsRight() {
 		const elts = [
