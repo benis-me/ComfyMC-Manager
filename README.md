@@ -16,7 +16,7 @@
 
 To install ComfyUI-Manager in addition to an existing installation of ComfyUI, you can follow the following steps:
 
-1. cd custom_nodes
+1. goto `ComfyUI/custom_nodes` dir in terminal(cmd)
 2. `git clone https://github.com/ltdrdata/ComfyUI-Manager.git`
 3. Restart ComfyUI
 
@@ -63,6 +63,8 @@ This repository provides Colab notebooks that allow you to install and use Comfy
 * Support for automatically installing dependencies of custom nodes upon restarting Colab notebooks.
 
 ## Changes
+* **2.4** Copy the connections of the nearest node by double-clicking.
+* **2.2.3** Support Components System
 * **0.29** Add `Update all` feature
 * **0.25** support db channel
   * You can directly modify the db channel settings in the `config.ini` file.
@@ -133,7 +135,9 @@ This repository provides Colab notebooks that allow you to install and use Comfy
   ![menu](misc/main.jpg) ![share](misc/share.jpg) 
 
   * You can share the workflow by clicking the Share button at the bottom of the main menu or selecting Share Output from the Context Menu of the Image node.
-  * Currently, it supports sharing via [https://comfyworkflows.com/](https://comfyworkflows.com/) and [https://openart.ai](https://openart.ai/workflows/dev), as well as through the Matrix channel.
+  * Currently, it supports sharing via [https://comfyworkflows.com/](https://comfyworkflows.com/),
+    [https://openart.ai](https://openart.ai/workflows/dev), [https://youml.com](https://youml.com) 
+    as well as through the Matrix channel.
 
   ![menu](misc/share-setting.jpg)
   
@@ -206,6 +210,41 @@ NODE_CLASS_MAPPINGS.update({
   * **All scripts are executed from the root path of the corresponding custom node.**
 
 
+## Component Sharing
+* **Copy & Paste**
+  * [Demo Page](https://ltdrdata.github.io/component-demo/)
+  * When pasting a component from the clipboard, it supports text in the following JSON format. (text/plain)
+    ```
+    {
+      "kind": "ComfyUI Components",
+      "timestamp": <current timestamp>,
+      "components": 
+        {
+          <component name>: <component nodedata>
+        }
+    }
+    ```
+  * `<current timestamp>` Ensure that the timestamp is always unique.
+    * "components" should have the same structure as the content of the file stored in ComfyUI-Manager/components.
+      * `<component name>`: The name should be in the format `<prefix>::<node name>`.
+        * `<compnent nodeata>`: In the nodedata of the group node.
+          * `<version>`: Only two formats are allowed: `major.minor.patch` or `major.minor`. (e.g. `1.0`, `2.2.1`)
+          * `<datetime>`: Saved time
+          * `<packname>`: If the packname is not empty, the category becomes packname/workflow, and it is saved in the <packname>.pack file in ComfyUI-Manager/components.
+          * `<category>`: If there is neither a category nor a packname, it is saved in the components category.
+          ```
+              "version":"1.0",
+              "datetime": 1705390656516,
+              "packname": "mypack",
+              "category": "util/pipe",
+          ```
+* **Drag & Drop**
+  * Dragging and dropping a `.pack` or `.json` file will add the corresponding components.
+  * Example pack: [Impact.pack](misc/Impact.pack)
+
+* Dragging and dropping or pasting a single component will add a node. However, when adding multiple components, nodes will not be added.
+
+
 ## Support of missing nodes installation
 
 ![missing-menu](misc/missing-menu.png)
@@ -215,6 +254,22 @@ NODE_CLASS_MAPPINGS.update({
 ![missing-list](misc/missing-list.png)
 
 
+## Additional Feature
+* Logging to file feature
+  * This feature is enabled by default and can be disabled by setting `file_logging = False` in the `config.ini`.
+
+* Fix node(recreate): When right-clicking on a node and selecting `Fix node (recreate)`, you can recreate the node. The widget's values are reset, while the connections maintain those with the same names.
+  * It is used to correct errors in nodes of old workflows created before, which are incompatible with the version changes of custom nodes.
+
+* Double-Click Node Title: You can set the double click behavior of nodes in the ComfyUI-Manager menu.
+  * `Copy All Connections`, `Copy Input Connections`: Double-clicking a node copies the connections of the nearest node.
+    * This action targets the nearest node within a straight-line distance of 1000 pixels from the center of the node.
+    * In the case of `Copy All Connections`, it duplicates existing outputs, but since it does not allow duplicate connections, the existing output connections of the original node are disconnected.
+    * This feature copies only the input and output that match the names.
+  
+  * `Possible Input Connections`: It connects all outputs that match the closest type within the specified range.
+    * This connection links to the closest outputs among the nodes located on the left side of the target node.
+
 ## Troubleshooting
 * If your `git.exe` is installed in a specific location other than system git, please install ComfyUI-Manager and run ComfyUI. Then, specify the path including the file name in `git_exe = ` in the ComfyUI-Manager/config.ini file that is generated.
 * If updating ComfyUI-Manager itself fails, please go to the **ComfyUI-Manager** directory and execute the command `git update-ref refs/remotes/origin/main a361cc1 && git fetch --all && git pull`.
@@ -222,6 +277,8 @@ NODE_CLASS_MAPPINGS.update({
    For the portable version, use `..\..\..\python_embeded\python.exe update-fix.py`.
 * For cases where nodes like `PreviewTextNode` from `ComfyUI_Custom_Nodes_AlekPet` are only supported as front-end nodes, we currently do not provide missing nodes for them.
 * Currently, `vid2vid` is not being updated, causing compatibility issues.
+* If you encounter the error message `Overlapped Object has pending operation at deallocation on Comfyui Manager load` under Windows
+  * Edit `config.ini` file: add `windows_selector_event_loop_policy = True`
 
 
 ## TODO: Unconventional form of custom node list
@@ -230,6 +287,7 @@ NODE_CLASS_MAPPINGS.update({
 * https://github.com/senshilabs/NINJA-plugin
 * https://github.com/MockbaTheBorg/Nodes
 * https://github.com/StartHua/Comfyui_GPT_Story
+* https://github.com/NielsGercama/comfyui_customsampling
 
 
 ## Roadmap
@@ -237,11 +295,11 @@ NODE_CLASS_MAPPINGS.update({
 - [x] System displaying information about failed custom nodes import.
 - [x] Guide for missing nodes in ComfyUI vanilla nodes.
 - [x] Collision checking system for nodes with the same ID across extensions.
+- [x] Template sharing system. (-> Component system based on Group Nodes)
+- [x] 3rd party API system.
 - [ ] Auto migration for custom nodes with changed structures.
 - [ ] Version control feature for nodes.
 - [ ] List of currently used custom nodes.
-- [ ] Template sharing system.
-- [ ] 3rd party API system.
 - [ ] Download support multiple model download.
 - [ ] Model download via url.
 - [ ] List sorting.

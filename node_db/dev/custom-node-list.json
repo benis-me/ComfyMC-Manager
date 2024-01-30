@@ -11,6 +11,136 @@
         
 
         {
+            "author": "17Retoucher",
+            "title": "ComfyUI_Fooocus",
+            "reference": "https://github.com/17Retoucher/ComfyUI_Fooocus",
+            "files": [
+                "https://github.com/17Retoucher/ComfyUI_Fooocus"
+            ],
+            "install_type": "git-clone",
+            "description": "Custom nodes that help reproduce image generation in Fooocus."
+        },
+        {
+            "author": "nkchocoai",
+            "title": "ComfyUI-PromptUtilities",
+            "reference": "https://github.com/nkchocoai/ComfyUI-PromptUtilities",
+            "files": [
+                "https://github.com/nkchocoai/ComfyUI-PromptUtilities"
+            ],
+            "install_type": "git-clone",
+            "description": "Nodes: Format String, Join String List, Load Preset, Load Preset (Advanced), Const String, Const String (multi line). Add useful nodes related to prompt."
+        },
+        {
+            "author": "BadCafeCode",
+            "title": "execution-inversion-demo-comfyui",
+            "reference": "https://github.com/BadCafeCode/execution-inversion-demo-comfyui",
+            "files": [
+                "https://github.com/BadCafeCode/execution-inversion-demo-comfyui"
+            ],
+            "install_type": "git-clone",
+            "description": "execution-inversion-demo-comfyui"
+        },
+        {
+            "author": "unanan",
+            "title": "ComfyUI-clip-interrogator [WIP]",
+            "reference": "https://github.com/unanan/ComfyUI-clip-interrogator",
+            "files": [
+                "https://github.com/unanan/ComfyUI-clip-interrogator"
+            ],
+            "install_type": "git-clone",
+            "description": "Unofficial ComfyUI extension of clip-interrogator"
+        },
+        {
+            "author": "solarpush",
+            "title": "comfyui_sendimage_node",
+            "reference": "https://github.com/solarpush/comfyui_sendimage_node",
+            "files": [
+                "https://github.com/solarpush/comfyui_sendimage_node"
+            ],
+            "install_type": "git-clone",
+            "description": "Nodes:Send to Pod"
+        },
+        {
+            "author": "prismwastaken",
+            "title": "prism-tools",
+            "reference": "https://github.com/prismwastaken/comfyui-tools",
+            "files": [
+                "https://github.com/prismwastaken/comfyui-tools"
+            ],
+            "install_type": "git-clone",
+            "description": "prism-tools"
+        },
+        {
+            "author": "poisenbery",
+            "title": "NudeNet-Detector-Provider [WIP]",
+            "reference": "https://github.com/poisenbery/NudeNet-Detector-Provider",
+            "files": [
+                "https://github.com/poisenbery/NudeNet-Detector-Provider"
+            ],
+            "install_type": "git-clone",
+            "description": "BBOX Detector Provider for NudeNet. Bethesda version of NudeNet V3 detector provider to work with Impact Pack ComfyUI."
+        },
+        {
+            "author": "LarryJane491",
+            "title": "ComfyUI-ModelUnloader",
+            "reference": "https://github.com/LarryJane491/ComfyUI-ModelUnloader",
+            "files": [
+                "https://github.com/LarryJane491/ComfyUI-ModelUnloader"
+            ],
+            "install_type": "git-clone",
+            "description": "A simple custom node that unloads all models. Useful for developers or users who want to free some memory."
+        },
+        {
+            "author": "AIGODLIKE",
+            "title": "AIGODLIKE/ComfyUI-Model-Manager [WIP]",
+            "reference": "https://github.com/AIGODLIKE/ComfyUI-Studio",
+            "files": [
+                "https://github.com/AIGODLIKE/ComfyUI-Studio"
+            ],
+            "install_type": "git-clone",
+            "description": "WIP"
+        },
+        {
+            "author": "kadirnar",
+            "title": "ComfyUI-Transformers",
+            "reference": "https://github.com/kadirnar/ComfyUI-Transformers",
+            "files": [
+                "https://github.com/kadirnar/ComfyUI-Transformers"
+            ],
+            "install_type": "git-clone",
+            "description": "Nodes:DepthEstimation."
+        },
+        {
+            "author": "MrAdamBlack",
+            "title": "CheckProgress [WIP]",
+            "reference": "https://github.com/MrAdamBlack/CheckProgress",
+            "files": [
+                "https://github.com/MrAdamBlack/CheckProgress"
+            ],
+            "install_type": "git-clone",
+            "description": "I was looking for a node to put in place to ensure my prompt etc where going as expected before the rest of the flow executed. To end the session, I just return the input image as None (see expected error). Recommend using it alongside PreviewImage, then output to the rest of the flow and Save Image."
+        },
+        {
+            "author": "11cafe",
+            "title": "11cafe/ComfyUI Model Manager [WIP]",
+            "reference": "https://github.com/11cafe/model-manager-comfyui",
+            "files": [
+                "https://github.com/11cafe/model-manager-comfyui"
+            ],
+            "install_type": "git-clone",
+            "description": "This answers the itch for being able to easily paste [a/CivitAI.com](CivitAI.com) generated data (or other simple metadata) into Comfy in a way that makes it easy to test with multiple checkpoints."
+        },
+        {
+            "author": "birnam",
+            "title": "Gen Data Tester [WIP]",
+            "reference": "https://github.com/birnam/ComfyUI-GenData-Pack",
+            "files": [
+                "https://github.com/birnam/ComfyUI-GenData-Pack"
+            ],
+            "install_type": "git-clone",
+            "description": "This answers the itch for being able to easily paste [a/CivitAI.com](CivitAI.com) generated data (or other simple metadata) into Comfy in a way that makes it easy to test with multiple checkpoints."
+        },
+        {
             "author": "ZHO-ZHO-ZHO",
             "title": "ComfyUI-AnyText（WIP）",
             "reference": "https://github.com/ZHO-ZHO-ZHO/ComfyUI-AnyText",

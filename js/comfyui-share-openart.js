@@ -278,44 +278,34 @@ export class OpenArtShareDialog extends ComfyDialog {
     ])
 
     // OpenArt Contest Section
-    this.joinContestCheckbox = $el(
-      'input',
-      {
-        type: 'checkbox',
-        id: 'join_contest',
+    /*
+    this.joinContestCheckbox = $el("input", {
+      type: 'checkbox',
+      id: "join_contest"s
+    }, [])
+    this.joinContestDescription = $el("a", {
+      style: {
+        ...hyperLinkStyle,
+        display: 'inline-block',
+        color: "#59E8C6",
+        fontSize: '12px',
+        marginLeft: '10px',
+        marginBottom: 0,
       },
-      []
-    )
-    this.joinContestDescription = $el(
-      'a',
-      {
-        style: {
-          ...hyperLinkStyle,
-          display: 'inline-block',
-          color: '#59E8C6',
-          fontSize: '12px',
-          marginLeft: '10px',
-          marginBottom: 0,
-        },
-        href: 'https://contest.openart.ai/',
-        target: '_blank',
-      },
-      ["🏆 I'm participating in the OpenArt workflow contest"]
-    )
-    this.joinContestLabel = $el(
-      'label',
-      {
-        style: {
-          display: 'flex',
-          alignItems: 'center',
-          cursor: 'pointer',
-        },
-      },
-      [this.joinContestCheckbox, this.joinContestDescription]
-    )
-    const contestSection = $el('div', { style: sectionStyle }, [
+      href: "https://contest.openart.ai/",
+      target: "_blank"
+    }, ["🏆 I'm participating in the OpenArt workflow contest"])
+    this.joinContestLabel = $el("label", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+      }
+    }, [this.joinContestCheckbox, this.joinContestDescription])
+    const contestSection = $el("div", {style: sectionStyle}, [
       this.joinContestLabel,
-    ])
+    ]);
+    */
 
     // Message Section
     this.message = $el(
@@ -375,7 +365,7 @@ export class OpenArtShareDialog extends ComfyDialog {
       outputUploadSection,
       this.outputsSection,
       additionalInputsSection,
-      contestSection,
+      // contestSection,
       this.message,
       buttonsSection,
     ]
@@ -512,7 +502,7 @@ export class OpenArtShareDialog extends ComfyDialog {
       }
     }
 
-    const join_contest = this.joinContestCheckbox.checked
+    // const join_contest = this.joinContestCheckbox.checked;
 
     try {
       const response = await this.fetchApi(
@@ -528,7 +518,7 @@ export class OpenArtShareDialog extends ComfyDialog {
               workflow_api_json: workflowAPIJSON,
               snapshot: current_snapshot,
             },
-            join_contest,
+            // join_contest,
           }),
         },
         'Uploading workflow...'
